@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WRIS — Multichain Wallet</title>
@@ -59,36 +60,8 @@
 
   #app { position: relative; z-index: 1; min-height: 100vh; }
 
-  .view { display: none; min-height: 100vh; }
+  .view { display: none; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center; }
   .view.active { display: flex; }
-
-  header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 24px;
-    background: rgba(5, 10, 20, 0.8);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-  .logo {
-    font-family: 'Orbitron', monospace;
-    font-weight: 900; font-size: 22px; letter-spacing: 4px;
-    background: linear-gradient(135deg, var(--cyan) 0%, var(--violet) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .logo span { font-size: 10px; letter-spacing: 2px; display: block; color: var(--text-secondary); -webkit-text-fill-color: var(--text-secondary); background: none; font-family: 'Inter', sans-serif; margin-top: -2px; }
-  .header-actions { display: flex; gap: 8px; align-items: center; }
-  .net-badge {
-    display: flex; align-items: center; gap: 6px;
-    padding: 6px 12px; border-radius: 20px;
-    background: var(--bg-glass); border: 1px solid var(--border);
-    font-size: 12px; color: var(--text-secondary); cursor: pointer;
-    transition: all 0.2s;
-  }
-  .net-badge:hover { border-color: var(--border-hover); color: var(--text-primary); }
-  .net-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 6px var(--mint); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -107,14 +80,65 @@
   }
   .btn-secondary:hover { border-color: var(--border-hover); background: var(--cyan-dim); }
   .btn-full { width: 100%; }
-  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+  .btn-sm { padding: 8px 16px; font-size: 12px; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  #app { display: flex; }
-
-  #view-welcome {
-    flex-direction: column; align-items: center; justify-content: center;
-    padding: 80px 24px 40px; text-align: center; gap: 0; width: 100%;
+  .card {
+    background: var(--bg-panel);
+    backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    padding: 24px;
+    max-width: 520px;
+    width: 100%;
   }
+
+  .field { margin-bottom: 20px; }
+  .field label {
+    display: block; font-size: 11px; font-weight: 600;
+    letter-spacing: 1.5px; color: var(--text-secondary);
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .field input, .field textarea {
+    width: 100%; padding: 12px 16px;
+    background: var(--bg-glass); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); color: var(--text-primary);
+    font-family: 'Inter', sans-serif; font-size: 14px;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .field input:focus, .field textarea:focus {
+    border-color: var(--cyan); box-shadow: 0 0 0 3px var(--cyan-dim);
+  }
+  .field textarea { resize: vertical; min-height: 90px; font-family: 'JetBrains Mono', monospace; }
+
+  .phrase-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 16px 0;
+  }
+  .phrase-word {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px; border-radius: 8px;
+    background: var(--bg-glass); border: 1px solid var(--border);
+    font-size: 13px; font-family: 'JetBrains Mono', monospace;
+    color: var(--cyan);
+  }
+
+  .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 999; display: flex; flex-direction: column; gap: 10px; }
+  .toast {
+    padding: 14px 20px; border-radius: var(--radius-sm);
+    font-size: 13px; font-weight: 500;
+    backdrop-filter: blur(20px);
+    max-width: 320px;
+    animation: toastIn 0.3s ease;
+  }
+  .toast-success { background: rgba(0,255,178,0.12); border: 1px solid rgba(0,255,178,0.3); color: var(--mint); }
+  .toast-error { background: rgba(255,59,92,0.12); border: 1px solid rgba(255,59,92,0.3); color: var(--red); }
+  .toast-info { background: var(--cyan-dim); border: 1px solid rgba(0,212,255,0.3); color: var(--cyan); }
+  @keyframes toastIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+
+  /* Welcome View */
+  #view-welcome { text-align: center; padding: 80px 24px 40px; }
   .welcome-logo {
     font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(52px, 10vw, 96px);
     letter-spacing: 12px; line-height: 1;
@@ -136,20 +160,47 @@
     color: var(--text-secondary); background: var(--bg-glass);
     display: flex; align-items: center; gap: 6px;
   }
-  .welcome-actions { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 360px; margin: 0 auto; }
+  .welcome-actions { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 360px; }
   .welcome-actions .btn { padding: 16px 24px; font-size: 15px; border-radius: var(--radius); }
   .welcome-divider {
-    font-size: 11px; letter-spacing: 2px; color: var(--text-dim); text-align: center;
+    font-size: 11px; letter-spacing: 2px; color: var(--text-dim);
   }
   .welcome-footer { margin-top: 48px; font-size: 11px; color: var(--text-dim); }
 
-  @keyframes spin { to { transform: rotate(360deg); } }
+  /* Setup View */
+  #view-setup { padding: 80px 24px 40px; }
+  .setup-header { text-align: center; margin-bottom: 24px; }
+  .setup-header h2 {
+    font-family: 'Orbitron', monospace;
+    font-size: 24px; letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  /* Dashboard View */
+  #view-dashboard { padding-top: 40px; padding-bottom: 40px; }
+  .dash-inner { max-width: 900px; width: 100%; margin: 0 auto; padding: 0 24px; }
+  .dash-header { text-align: center; margin-bottom: 32px; }
+  .dash-header h1 { font-family: 'Orbitron', monospace; font-size: 32px; letter-spacing: 2px; margin-bottom: 8px; }
+  .dash-address {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    padding: 12px 16px; background: var(--bg-glass); border: 1px solid var(--border);
+    border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--text-secondary); cursor: pointer; margin-bottom: 24px;
+  }
+  .dash-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
   .spin { animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .hidden { display: none !important; }
 </style>
+</head>
 <body>
 
+<div class="toast-container" id="toastContainer"></div>
+
 <div id="app">
+  <!-- Welcome Screen -->
   <div id="view-welcome" class="view active">
     <div class="welcome-logo">WRIS</div>
     <div class="welcome-sub">Non-Custodial Multichain Wallet</div>
@@ -160,16 +211,176 @@
       <div class="chain-pill">⚫ Arbitrum</div>
     </div>
     <div class="welcome-actions">
-      <button class="btn btn-primary btn-full">Create New Wallet</button>
+      <button class="btn btn-primary btn-full" onclick="startCreate()">Create New Wallet</button>
       <div class="welcome-divider">OR</div>
-      <button class="btn btn-secondary btn-full">Import Existing</button>
+      <button class="btn btn-secondary btn-full" onclick="startImport()">Import Existing</button>
     </div>
     <div class="welcome-footer">Non-custodial • Self-hosted • Privacy First</div>
+  </div>
+
+  <!-- Create Wallet Screen -->
+  <div id="view-create" class="view">
+    <div class="card">
+      <div class="setup-header">
+        <h2>Create New Wallet</h2>
+        <p style="color: var(--text-secondary); font-size: 12px;">Your secure phrase will be generated</p>
+      </div>
+      <div class="field">
+        <button class="btn btn-primary btn-full" onclick="generateSeed()">Generate Seed Phrase</button>
+      </div>
+      <div id="seedContainer" class="hidden">
+        <div class="field">
+          <label>Your Seed Phrase (Keep it Safe!)</label>
+          <div class="phrase-grid" id="phraseGrid"></div>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="confirmCreate()">I've Saved My Phrase</button>
+        <button class="btn btn-secondary btn-full" onclick="backToWelcome()">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import Wallet Screen -->
+  <div id="view-import" class="view">
+    <div class="card">
+      <div class="setup-header">
+        <h2>Import Wallet</h2>
+        <p style="color: var(--text-secondary); font-size: 12px;">Enter your 12 or 24 word seed phrase</p>
+      </div>
+      <div class="field">
+        <label>Seed Phrase</label>
+        <textarea id="importPhrase" placeholder="Enter your seed phrase here..."></textarea>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="importWallet()">Import Wallet</button>
+      <button class="btn btn-secondary btn-full" onclick="backToWelcome()">Back</button>
+    </div>
+  </div>
+
+  <!-- Dashboard Screen -->
+  <div id="view-dashboard" class="view">
+    <div class="dash-inner">
+      <div class="dash-header">
+        <h1>Wallet Created! 🎉</h1>
+        <div class="dash-address" id="dashAddress">0x...</div>
+      </div>
+      <div class="dash-buttons">
+        <button class="btn btn-primary" onclick="copyAddress()">Copy Address</button>
+        <button class="btn btn-secondary" onclick="viewPhrase()">View Phrase</button>
+        <button class="btn btn-secondary" onclick="backToWelcome()">New Wallet</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-console.log('WRIS Wallet initialized');
+let currentWallet = null;
+let currentPhrase = null;
+
+function showView(viewId) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(viewId).classList.add('active');
+}
+
+function showToast(message, type = 'info') {
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.textContent = message;
+  document.getElementById('toastContainer').appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+function startCreate() {
+  showView('view-create');
+  document.getElementById('seedContainer').classList.add('hidden');
+}
+
+function startImport() {
+  showView('view-import');
+  document.getElementById('importPhrase').value = '';
+}
+
+function backToWelcome() {
+  showView('view-welcome');
+}
+
+function generateSeed() {
+  try {
+    currentPhrase = bip39.generateMnemonic(128); // 12 words
+    displayPhrase(currentPhrase);
+    document.getElementById('seedContainer').classList.remove('hidden');
+    showToast('Seed phrase generated successfully!', 'success');
+  } catch (error) {
+    showToast('Error generating seed phrase: ' + error.message, 'error');
+  }
+}
+
+function displayPhrase(phrase) {
+  const words = phrase.split(' ');
+  const phraseGrid = document.getElementById('phraseGrid');
+  phraseGrid.innerHTML = '';
+  words.forEach((word, index) => {
+    const wordEl = document.createElement('div');
+    wordEl.className = 'phrase-word';
+    wordEl.innerHTML = `<span>${index + 1}.</span><span>${word}</span>`;
+    phraseGrid.appendChild(wordEl);
+  });
+}
+
+function confirmCreate() {
+  try {
+    const wallet = ethers.Wallet.fromMnemonic(currentPhrase);
+    currentWallet = wallet;
+    showDashboard();
+    showToast('Wallet created successfully!', 'success');
+  } catch (error) {
+    showToast('Error creating wallet: ' + error.message, 'error');
+  }
+}
+
+function importWallet() {
+  const phrase = document.getElementById('importPhrase').value.trim();
+  
+  if (!phrase) {
+    showToast('Please enter a seed phrase', 'error');
+    return;
+  }
+
+  try {
+    if (bip39.validateMnemonic(phrase)) {
+      const wallet = ethers.Wallet.fromMnemonic(phrase);
+      currentWallet = wallet;
+      currentPhrase = phrase;
+      showDashboard();
+      showToast('Wallet imported successfully!', 'success');
+    } else {
+      showToast('Invalid seed phrase', 'error');
+    }
+  } catch (error) {
+    showToast('Error: ' + error.message, 'error');
+  }
+}
+
+function showDashboard() {
+  if (currentWallet) {
+    document.getElementById('dashAddress').textContent = currentWallet.address;
+  }
+  showView('view-dashboard');
+}
+
+function copyAddress() {
+  if (currentWallet) {
+    navigator.clipboard.writeText(currentWallet.address);
+    showToast('Address copied to clipboard!', 'success');
+  }
+}
+
+function viewPhrase() {
+  if (currentPhrase) {
+    alert('Your Seed Phrase:\n\n' + currentPhrase + '\n\nNever share this with anyone!');
+  }
+}
+
+// Initialize
+showView('view-welcome');
 </script>
 
 </body>
