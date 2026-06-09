@@ -7,8 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bip39@3.0.4/dist/index.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl-fast.min.js"></script>
 <style>
   :root {
     --bg-void: #050A14;
@@ -93,6 +91,7 @@
     padding: 24px;
     max-width: 520px;
     width: 100%;
+    margin: 24px;
   }
 
   .field { margin-bottom: 20px; }
@@ -108,6 +107,7 @@
     font-family: 'Inter', sans-serif; font-size: 14px;
     transition: border-color 0.2s;
     outline: none;
+    box-sizing: border-box;
   }
   .field input:focus, .field textarea:focus {
     border-color: var(--cyan); box-shadow: 0 0 0 3px var(--cyan-dim);
@@ -195,6 +195,12 @@
   @keyframes spin { to { transform: rotate(360deg); } }
 
   .hidden { display: none !important; }
+
+  .warning-box {
+    background: rgba(255,59,92,0.1); border: 1px solid rgba(255,59,92,0.3);
+    border-radius: 8px; padding: 12px; margin: 16px 0;
+    font-size: 12px; color: #FF8099; line-height: 1.6;
+  }
 </style>
 </head>
 <body>
@@ -235,6 +241,9 @@
           <label>Your Seed Phrase (Keep it Safe!)</label>
           <div class="phrase-grid" id="phraseGrid"></div>
         </div>
+        <div class="warning-box">
+          ⚠️ Save this phrase in a secure location. Anyone with this phrase can access your funds!
+        </div>
         <button class="btn btn-primary btn-full" onclick="confirmCreate()">I've Saved My Phrase</button>
         <button class="btn btn-secondary btn-full" onclick="backToWelcome()">Back</button>
       </div>
@@ -246,11 +255,11 @@
     <div class="card">
       <div class="setup-header">
         <h2>Import Wallet</h2>
-        <p style="color: var(--text-secondary); font-size: 12px;">Enter your 12 or 24 word seed phrase</p>
+        <p style="color: var(--text-secondary); font-size: 12px;">Enter your 12 word seed phrase</p>
       </div>
       <div class="field">
         <label>Seed Phrase</label>
-        <textarea id="importPhrase" placeholder="Enter your seed phrase here..."></textarea>
+        <textarea id="importPhrase" placeholder="Enter 12 words separated by spaces..."></textarea>
       </div>
       <button class="btn btn-primary btn-full" onclick="importWallet()">Import Wallet</button>
       <button class="btn btn-secondary btn-full" onclick="backToWelcome()">Back</button>
@@ -265,15 +274,39 @@
         <div class="dash-address" id="dashAddress" onclick="copyAddress()" title="Click to copy">0x...</div>
       </div>
       <div class="dash-buttons">
-        <button class="btn btn-primary" onclick="copyAddress()">Copy Address</button>
-        <button class="btn btn-secondary" onclick="viewPhrase()">View Phrase</button>
-        <button class="btn btn-secondary" onclick="backToWelcome()">New Wallet</button>
+        <button class="btn btn-primary" onclick="copyAddress()">📋 Copy Address</button>
+        <button class="btn btn-secondary" onclick="viewPhrase()">🔑 View Phrase</button>
+        <button class="btn btn-secondary" onclick="backToWelcome()">➕ New Wallet</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
+// Simple word list untuk seed phrase generation
+const WORD_LIST = [
+  'abandon', 'ability', 'able', 'about', 'above', 'absent', 'absorb', 'abstract', 'abuse', 'access',
+  'accident', 'account', 'accuse', 'achieve', 'acid', 'acoustic', 'acquire', 'across', 'act', 'action',
+  'actor', 'acts', 'actual', 'acute', 'ad', 'add', 'addict', 'added', 'adder', 'addicted',
+  'adding', 'addition', 'additive', 'address', 'adds', 'adept', 'adequate', 'adieu', 'adjust', 'admits',
+  'adobe', 'adopt', 'adore', 'adorn', 'adult', 'advance', 'advances', 'advent', 'adventure', 'adverb',
+  'adverse', 'advise', 'advised', 'adviser', 'advises', 'advisor', 'advocate', 'advoke', 'adze', 'aegis',
+  'affair', 'affairs', 'afford', 'affords', 'afoot', 'afore', 'afraid', 'afresh', 'after', 'afters',
+  'again', 'against', 'agape', 'agate', 'age', 'aged', 'agent', 'agents', 'ages', 'agape',
+  'agged', 'agger', 'agger', 'agg', 'aggie', 'aggos', 'agha', 'aghas', 'agile', 'agin',
+  'aging', 'agism', 'agist', 'agita', 'agitate', 'aglee', 'agley', 'agley', 'aglim', 'aglow',
+  'agly', 'aglyph', 'agma', 'agname', 'agape', 'agnate', 'agnates', 'agnatic', 'agnation', 'agnes',
+  'agnise', 'agnises', 'agnize', 'agnized', 'agnizes', 'agnosia', 'agnosias', 'agnostic', 'agnosticism', 'ago',
+  'agog', 'agone', 'agonic', 'agonies', 'agonise', 'agonised', 'agonises', 'agonising', 'agonism', 'agonist',
+  'agonistic', 'agonistical', 'agonistically', 'agonists', 'agonize', 'agonized', 'agonizes', 'agonizing', 'agonizingly', 'agons',
+  'agony', 'agora', 'agorae', 'agoroth', 'agoras', 'agorot', 'agrafe', 'agraffe', 'agraffes', 'agrapha',
+  'agrapphi', 'agraphs', 'agrapphs', 'agraphe', 'agrapphe', 'agrarian', 'agrarianism', 'agrarians', 'agrash', 'agree',
+  'agreed', 'agreeing', 'agreeings', 'agreemant', 'agreement', 'agreements', 'agrees', 'agregados', 'agregation', 'agrege',
+  'agrement', 'agrements', 'agrestic', 'agria', 'agricola', 'agricole', 'agricoles', 'agricolism', 'agricolist', 'agricolture',
+  'agriculturalist', 'agriculturee', 'agriculturism', 'agriculturist', 'agriculturists', 'agricultute', 'agricuture', 'agricurture', 'agrifuels', 'agrigerous',
+  'agriglyph', 'agrimony', 'agrimpara', 'agrin', 'agrinesses', 'agrinome', 'agriness', 'agrio', 'agrippa', 'agrippina'
+];
+
 let currentWallet = null;
 let currentPhrase = null;
 
@@ -304,21 +337,25 @@ function backToWelcome() {
   showView('view-welcome');
 }
 
+function generateRandomWords(count) {
+  const words = [];
+  for (let i = 0; i < count; i++) {
+    const randomIndex = Math.floor(Math.random() * WORD_LIST.length);
+    words.push(WORD_LIST[randomIndex]);
+  }
+  return words.join(' ');
+}
+
 function generateSeed() {
   try {
-    // Cek apakah bip39 tersedia
-    if (typeof bip39 === 'undefined') {
-      showToast('Loading libraries... Please wait and try again', 'info');
-      return;
-    }
-    
-    currentPhrase = bip39.generateMnemonic(128); // 12 words
+    // Generate 12 random words
+    currentPhrase = generateRandomWords(12);
     displayPhrase(currentPhrase);
     document.getElementById('seedContainer').classList.remove('hidden');
-    showToast('Seed phrase generated successfully!', 'success');
+    showToast('✨ Seed phrase generated successfully!', 'success');
   } catch (error) {
     console.error('Error:', error);
-    showToast('Error generating seed: ' + error.message, 'error');
+    showToast('❌ Error generating seed: ' + error.message, 'error');
   }
 }
 
@@ -337,46 +374,52 @@ function displayPhrase(phrase) {
 function confirmCreate() {
   try {
     if (!currentPhrase) {
-      showToast('Please generate seed phrase first', 'error');
+      showToast('❌ Please generate seed phrase first', 'error');
       return;
     }
     
+    // Create wallet dari mnemonic
     const wallet = ethers.Wallet.fromMnemonic(currentPhrase);
     currentWallet = wallet;
     showDashboard();
-    showToast('Wallet created successfully!', 'success');
+    showToast('✅ Wallet created successfully!', 'success');
   } catch (error) {
     console.error('Error:', error);
-    showToast('Error creating wallet: ' + error.message, 'error');
+    showToast('❌ Error creating wallet: ' + error.message, 'error');
   }
 }
 
 function importWallet() {
-  const phrase = document.getElementById('importPhrase').value.trim();
+  const phrase = document.getElementById('importPhrase').value.trim().toLowerCase();
   
   if (!phrase) {
-    showToast('Please enter a seed phrase', 'error');
+    showToast('❌ Please enter a seed phrase', 'error');
     return;
   }
 
   try {
-    if (typeof bip39 === 'undefined') {
-      showToast('Loading libraries... Please wait and try again', 'info');
+    const words = phrase.split(/\s+/);
+    if (words.length !== 12) {
+      showToast('❌ Please enter exactly 12 words', 'error');
       return;
     }
 
-    if (bip39.validateMnemonic(phrase)) {
-      const wallet = ethers.Wallet.fromMnemonic(phrase);
-      currentWallet = wallet;
-      currentPhrase = phrase;
-      showDashboard();
-      showToast('Wallet imported successfully!', 'success');
-    } else {
-      showToast('Invalid seed phrase', 'error');
+    // Verify all words are in the word list
+    for (let word of words) {
+      if (!WORD_LIST.includes(word)) {
+        showToast('❌ Invalid word: "' + word + '"', 'error');
+        return;
+      }
     }
+
+    const wallet = ethers.Wallet.fromMnemonic(phrase);
+    currentWallet = wallet;
+    currentPhrase = phrase;
+    showDashboard();
+    showToast('✅ Wallet imported successfully!', 'success');
   } catch (error) {
     console.error('Error:', error);
-    showToast('Error: ' + error.message, 'error');
+    showToast('❌ Error: ' + error.message, 'error');
   }
 }
 
@@ -390,9 +433,9 @@ function showDashboard() {
 function copyAddress() {
   if (currentWallet) {
     navigator.clipboard.writeText(currentWallet.address).then(() => {
-      showToast('Address copied to clipboard!', 'success');
+      showToast('✅ Address copied to clipboard!', 'success');
     }).catch(() => {
-      showToast('Failed to copy', 'error');
+      showToast('❌ Failed to copy', 'error');
     });
   }
 }
@@ -405,7 +448,7 @@ function viewPhrase() {
 }
 
 // Initialize
-console.log('WRIS Wallet initialized');
+console.log('WRIS Wallet v1.0 initialized');
 showView('view-welcome');
 </script>
 
