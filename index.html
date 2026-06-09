@@ -138,7 +138,6 @@
   .toast-info { background: var(--cyan-dim); border: 1px solid rgba(0,212,255,0.3); color: var(--cyan); }
   @keyframes toastIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
 
-  /* Welcome View */
   #view-welcome { text-align: center; padding: 80px 24px 40px; }
   .welcome-logo {
     font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(52px, 10vw, 96px);
@@ -168,7 +167,6 @@
   }
   .welcome-footer { margin-top: 48px; font-size: 11px; color: var(--text-dim); }
 
-  /* Setup View */
   #view-create, #view-import { padding: 80px 24px 40px; }
   .setup-header { text-align: center; margin-bottom: 24px; }
   .setup-header h2 {
@@ -177,7 +175,6 @@
     margin-bottom: 8px;
   }
 
-  /* Dashboard View */
   #view-dashboard { padding-top: 40px; padding-bottom: 40px; }
   .dash-inner { max-width: 900px; width: 100%; margin: 0 auto; padding: 0 24px; }
   .dash-header { text-align: center; margin-bottom: 32px; }
@@ -208,7 +205,6 @@
 <div class="toast-container" id="toastContainer"></div>
 
 <div id="app">
-  <!-- Welcome Screen -->
   <div id="view-welcome" class="view active">
     <div class="welcome-logo">WRIS</div>
     <div class="welcome-sub">Non-Custodial Multichain Wallet</div>
@@ -226,7 +222,6 @@
     <div class="welcome-footer">Non-custodial • Self-hosted • Privacy First</div>
   </div>
 
-  <!-- Create Wallet Screen -->
   <div id="view-create" class="view">
     <div class="card">
       <div class="setup-header">
@@ -250,7 +245,6 @@
     </div>
   </div>
 
-  <!-- Import Wallet Screen -->
   <div id="view-import" class="view">
     <div class="card">
       <div class="setup-header">
@@ -266,7 +260,6 @@
     </div>
   </div>
 
-  <!-- Dashboard Screen -->
   <div id="view-dashboard" class="view">
     <div class="dash-inner">
       <div class="dash-header">
@@ -283,29 +276,7 @@
 </div>
 
 <script>
-// Simple word list untuk seed phrase generation
-const WORD_LIST = [
-  'abandon', 'ability', 'able', 'about', 'above', 'absent', 'absorb', 'abstract', 'abuse', 'access',
-  'accident', 'account', 'accuse', 'achieve', 'acid', 'acoustic', 'acquire', 'across', 'act', 'action',
-  'actor', 'acts', 'actual', 'acute', 'ad', 'add', 'addict', 'added', 'adder', 'addicted',
-  'adding', 'addition', 'additive', 'address', 'adds', 'adept', 'adequate', 'adieu', 'adjust', 'admits',
-  'adobe', 'adopt', 'adore', 'adorn', 'adult', 'advance', 'advances', 'advent', 'adventure', 'adverb',
-  'adverse', 'advise', 'advised', 'adviser', 'advises', 'advisor', 'advocate', 'advoke', 'adze', 'aegis',
-  'affair', 'affairs', 'afford', 'affords', 'afoot', 'afore', 'afraid', 'afresh', 'after', 'afters',
-  'again', 'against', 'agape', 'agate', 'age', 'aged', 'agent', 'agents', 'ages', 'agape',
-  'agged', 'agger', 'agger', 'agg', 'aggie', 'aggos', 'agha', 'aghas', 'agile', 'agin',
-  'aging', 'agism', 'agist', 'agita', 'agitate', 'aglee', 'agley', 'agley', 'aglim', 'aglow',
-  'agly', 'aglyph', 'agma', 'agname', 'agape', 'agnate', 'agnates', 'agnatic', 'agnation', 'agnes',
-  'agnise', 'agnises', 'agnize', 'agnized', 'agnizes', 'agnosia', 'agnosias', 'agnostic', 'agnosticism', 'ago',
-  'agog', 'agone', 'agonic', 'agonies', 'agonise', 'agonised', 'agonises', 'agonising', 'agonism', 'agonist',
-  'agonistic', 'agonistical', 'agonistically', 'agonists', 'agonize', 'agonized', 'agonizes', 'agonizing', 'agonizingly', 'agons',
-  'agony', 'agora', 'agorae', 'agoroth', 'agoras', 'agorot', 'agrafe', 'agraffe', 'agraffes', 'agrapha',
-  'agrapphi', 'agraphs', 'agrapphs', 'agraphe', 'agrapphe', 'agrarian', 'agrarianism', 'agrarians', 'agrash', 'agree',
-  'agreed', 'agreeing', 'agreeings', 'agreemant', 'agreement', 'agreements', 'agrees', 'agregados', 'agregation', 'agrege',
-  'agrement', 'agrements', 'agrestic', 'agria', 'agricola', 'agricole', 'agricoles', 'agricolism', 'agricolist', 'agricolture',
-  'agriculturalist', 'agriculturee', 'agriculturism', 'agriculturist', 'agriculturists', 'agricultute', 'agricuture', 'agricurture', 'agrifuels', 'agrigerous',
-  'agriglyph', 'agrimony', 'agrimpara', 'agrin', 'agrinesses', 'agrinome', 'agriness', 'agrio', 'agrippa', 'agrippina'
-];
+const WORD_LIST = ["abandon","ability","able","about","above","absent","absorb","abstract","abuse","access","accident","account","accuse","achieve","acid","acoustic","acquire","across","act","action","actor","acts","actual","acute","ad","add","addict","added","adder","addicted","adding","addition","additive","address","adds","adept","adequate","adieu","adjust","adjusts","admits","adobe","adopt","adore","adorn","adult","advance","advances","advent","adventure","adverb","adverse","advertise","advice","advise","advised","adviser","advises","advisor","advocate","adze","aegis","aeon","affair","afford","afraid","africa","after","afters","again","against","agaric","agate","agave","age","aged","agent","agents","ages","agg","agha","aghast","agile","aging","agism","agist","agitate","agitated","agitates","agitation","agitator","agley","aglow","agly","agnat","agnate","agnates","agnatic","agnation","agnised","agnises","agnize","agnized","agnizes","agog","agone","agonic","agonies","agonise","agonised","agonises","agonising","agonism","agonist","agonistic","agonistical","agonistically","agonists","agonize","agonized","agonizes","agonizing","agonizingly","agons","agony","agora","agorae","agoroth","agoras","agorot","agrafe","agraffe","agraffes","agrapha","agrapphi","agraphs","agrapphs","agraphe","agrapphe","agrarian","agrarianism","agrarians","agrash","agree","agreed","agreeing","agreeings","agreemant","agreement","agreements","agrees","agregados","agregation","agrege","agrement","agrements","agrestic","agria","agricola","agricole","agricoles","agricolism","agricolist","agricolture","agriculturalist","agriculturee","agriculturism","agriculturist","agriculturists","agricultute","agricuture","agricurture","agrifuels","agrigerous","agriglyph","agrimony","agrimpara","agrin","agrinesses","agrinome","agriness","agrio","agrippa","agrippina","agrise","agrises","agrisor","agritourism","agro","agroforestry","agrologic","agrological","agrology","agromania","agromancy","agronomic","agronomical","agronomically","agronomies","agronomist","agronomists","agronomy","agros","agrotech","aground","agrotype","ague","agued","agues","agueweed","aguey","agul","agulla","agunas","aguna","aguti","agutis","aguti","aguti","ah","aha","ahas","ahead","ahed","ahem","ahemeral","ahemp","ahent","aheye","ahi","ahick","ahind","ahing","ahint","ahis","ahistoric","ahistorical","ahistoricity","ahither","ahold","aholds","ahorse","ahorseback","ahoy","ahrairah","ahrimans","ahchoo","ahchoos","ahs","ahs","ahull","ahull","ahull","ai","aid","aida","aidance","aidances","aided","aider","aiders","aides","aiding","aids","aidful","aidless","aidoi","aiee","aield","aiers","aiery","aies","aife","aiga","aigas","aiglet","aiglets","aigred","aigres","aigrette","aigrettes","aigrettes","aigret","aigrets","aigrets","aigret","aigui","aiguille","aiguilles","aiguilles","aiguilles","aigrettes","aigrette","aiguilette","aiguilettes","aih","aiid","aiids","aik","aikane","aikanes","aikido","aikidos","aikidos","aiks","ail","ailanthus","ailantuses","ailanthuses","ailanthuses","ailantuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses"];
 
 let currentWallet = null;
 let currentPhrase = null;
@@ -348,7 +319,6 @@ function generateRandomWords(count) {
 
 function generateSeed() {
   try {
-    // Generate 12 random words
     currentPhrase = generateRandomWords(12);
     displayPhrase(currentPhrase);
     document.getElementById('seedContainer').classList.remove('hidden');
@@ -378,7 +348,6 @@ function confirmCreate() {
       return;
     }
     
-    // Create wallet dari mnemonic
     const wallet = ethers.Wallet.fromMnemonic(currentPhrase);
     currentWallet = wallet;
     showDashboard();
@@ -404,7 +373,6 @@ function importWallet() {
       return;
     }
 
-    // Verify all words are in the word list
     for (let word of words) {
       if (!WORD_LIST.includes(word)) {
         showToast('❌ Invalid word: "' + word + '"', 'error');
@@ -447,8 +415,7 @@ function viewPhrase() {
   }
 }
 
-// Initialize
-console.log('WRIS Wallet v1.0 initialized');
+console.log('WRIS Wallet v2.0 initialized');
 showView('view-welcome');
 </script>
 
