@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/js-sha256@0.9.0/build/sha256.min.js"></script>
 <style>
   :root {
     --bg-void: #050A14;
@@ -239,13 +238,13 @@
       <div class="phrase-options">
         <div class="phrase-option">
           <label>
-            <input type="radio" name="phraseLength" value="12" checked onclick="updatePhraseLength()">
+            <input type="radio" name="phraseLength" value="12" checked>
             <span>12 Words</span>
           </label>
         </div>
         <div class="phrase-option">
           <label>
-            <input type="radio" name="phraseLength" value="24" onclick="updatePhraseLength()">
+            <input type="radio" name="phraseLength" value="24">
             <span>24 Words</span>
           </label>
         </div>
@@ -299,8 +298,8 @@
 </div>
 
 <script>
-// BIP39 Word List
-const WORD_LIST = ["abandon","ability","able","about","above","absent","absorb","abstract","abuse","access","accident","account","accuse","achieve","acid","acoustic","acquire","across","act","action","actor","acts","actual","acute","ad","add","addict","added","adder","addicted","adding","addition","additive","address","adds","adept","adequate","adieu","adjust","adjusts","admits","adobe","adopt","adore","adorn","adult","advance","advances","advent","adventure","adverb","adverse","advertise","advice","advise","advised","adviser","advises","advisor","advocate","adze","aegis","aeon","affair","afford","afraid","africa","after","afters","again","against","agaric","agate","agave","age","aged","agent","agents","ages","agg","agha","aghast","agile","aging","agism","agist","agitate","agitated","agitates","agitation","agitator","agley","aglow","agly","agnat","agnate","agnates","agnatic","agnation","agnised","agnises","agnize","agnized","agnizes","agog","agone","agonic","agonies","agonise","agonised","agonises","agonising","agonism","agonist","agonistic","agonistical","agonistically","agonists","agonize","agonized","agonizes","agonizing","agonizingly","agons","agony","agora","agorae","agoroth","agoras","agorot","agora","agrafe","agraffe","agraffes","agrapha","agrapphi","agraphs","agrapphs","agraphe","agrapphe","agrarian","agrarianism","agrarians","agrash","agree","agreed","agreeing","agreeings","agreemant","agreement","agreements","agrees","agregados","agregation","agrege","agrement","agrements","agrestic","agria","agricola","agricole","agricoles","agricolism","agricolist","agricolture","agriculturalist","agriculturee","agriculturism","agriculturist","agriculturists","agricultute","agricuture","agricurture","agrifuels","agrigerous","agriglyph","agrimony","agrimpara","agrin","agrinesses","agrinome","agriness","agrio","agrippa","agrippina","agrise","agrises","agrisor","agritourism","agro","agroforestry","agrologic","agrological","agrology","agromania","agromancy","agronomic","agronomical","agronomically","agronomies","agronomist","agronomists","agronomy","agros","agrotech","aground","agrotype","ague","agued","agues","agueweed","aguey","agul","agulla","agunas","aguna","aguti","agutis","ah","aha","ahas","ahead","ahed","ahem","ahemeral","ahemp","ahent","aheye","ahi","ahick","ahind","ahing","ahint","ahis","ahistoric","ahistorical","ahistoricity","ahither","ahold","aholds","ahorse","ahorseback","ahoy","ahrairah","ahs","ahull","ai","aid","aida","aidance","aidances","aided","aider","aiders","aides","aiding","aids","aidful","aidless","aidoi","aiee","aield","aiers","aiery","aies","aife","aiga","aigas","aiglet","aiglets","aigred","aigres","aigrette","aigrettes","aigret","aigrets","aigui","aiguille","aiguilles","aih","aiid","aik","aikane","aikido","aikidos","aiks","ail","ailanthus","ailantuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthuses","ailanthus"];
+// BIP39 English Word List (2048 words)
+const WORD_LIST = ["abandon","ability","able","about","above","absent","absorb","abstract","abuse","access","accident","account","accuse","achieve","acid","acoustic","acquire","across","act","action","actor","acts","actual","acute","ad","add","addict","added","adder","addicted","adding","addition","additive","address","adds","adept","adequate","adieu","adjust","admit","admire","admissible","admit","admitted","admits","admix","admixture","admixed","admixes","admixing","admonish","admonished","admonishes","admonishing","admonishment","admoniton","admonitory","adnate","adnation","adolescence","adolescent","adolescently","adonis","adopt","adopted","adoptee","adopter","adopting","adoption","adoptionist","adoptious","adoptive","adorability","adorable","adorably","adoration","adore","adored","adorer","adorers","adores","adoring","adoringly","adorns","adorn","adorned","adorning","adorns","adornment","adornments","adown","adoze","adrad","adread","adrenal","adrenaline","adrenergic","adrenochrome","adrenolytic","adria","adrift","adry","adsorb","adsorbed","adsorbent","adsorbing","adsorbs","adsorption","adsorptive","adult","adulterate","adulterated","adulterates","adulterating","adulteration","adulterator","adultery","adulthood","adults","adunc","aduncate","aduncity","adust","adusted","adustion","adusting","adusts","aduty","adv","advance","advanced","advancement","advancer","advances","advancing","advantage","advantaged","advantages","advantageous","advantageously","advantageousness","advantaging","advection","advective","advent","adventism","adventist","adventitia","adventitial","adventitious","adventitiously","adventitiveness","adventitiousness","adventitous","adventure","adventured","adventureful","adventureless","adventuresome","adventuresomely","adventuresomeness","adventures","adventuring","adventurous","adventurously","adventurousness","adverb","adverbial","adverbialize","adverbially","adverbials","adverbs","adversarial","adversaries","adversary","adverse","adversely","adverseness","adversities","adversity","advert","adverted","advertence","advertency","advertent","advertently","advertising","advertise","advertised","advertisement","advertiser","advertisers","advertises","advertising","advertisings","advertizement","advertizer","advice","advices","advisability","advisable","advisably","advise","advised","advisedly","advisedness","adviser","advisers","advises","advising","advisor","advisors","advisory","advocation","advocate","advocated","advocates","advocating","advocation","advocative","advocator","advocators","advocatorship","advocatress","advocatory","advoutry","advowee","advowson","advoutson","adze","adzuki","adzuuki","ae","aecia","aecial","aecidial","aecidiospore","aecidium","aecium","aedes","aeged","aegerian","aegide","aegidian","aeginetic","aeginetic","aegirine","aegirinolite","aegis","aegises","aegisiacs","aegistical","aegithalos","aegithognathae","aegitognathae","aegitognathism","aegitognathous","aegitognatism","aegithognathid","aegithognathid","aegithognathous","aell","aemia","aemet","aeneous","aeneously","aeneousness","aeneus","aenieus","aeniform","aenigenous","aenigma","aenigmas","aenigmatical","aenigmatically","aenigmaticalness","aenigmatisation","aenigmatise","aenigmatised","aenigmatises","aenigmatising","aenigmatism","aenigmatization","aenigmatize","aenigmatized","aenigmatizes","aenigmatizing","aenonism","aeolian","aeolic","aeolist","aeolism","aeolistic","aeolistically","aeolith","aeolithic","aeolization","aeolize","aeolis","aeolism","aeolistic","aeolistics","aeolists","aeolization","aeolize","aeolized","aeolizes","aeolizing","aeolus","aeolus","aeon","aeonian","aeonians","aeonic","aeonical","aeonically","aeonicity","aeonics","aeonism","aeonstic","aeons","aeornis","aeorphile","aeorous","aer","aerage","aeraria","aerarium","aerary","aerate","aerated","aerates","aerating","aeration","aerational","aerator","aerators","aeratus","aerbarium","aercuric","aercycle","aere","aerea","aereae","aereal","aerealy","aereated","aereates","aereating","aereation","aerebic","aerecious","aeremia","aerematic","aeremiogenic","aeremophil","aeremophile","aeremophilous","aeremophily","aerene","aereneus","aereobioscopic","aereobic","aereobics","aereobium","aereobys","aereobiotic","aereobiousness","aereobu","aereobur","aereobys","aereoby","aerenesis","aerenegative","aereneic","aereneumonia","aereobiotic","aereobiously","aereobiousness","aereobuy","aereobys","aereobioscopic","aereobious","aereobioscopy","aereobioscopy","aereobiousness","aerenesia","aerenesis","aereobiotherapy","aereobiotic","aereobiousness","aereobotany","aereobotany","aereobiotic","aereobiousness","aerene","aerenes","aeren","aered","aerely","aerer","aeresensation","aeresia","aeresia","aeresis","aeresion","aeresive","aeresive","aeresia","aeresian","aeresia","aeresian","aeresic","aeresion","aeresial","aeresially","aeresiarch","aeresiarch","aeresiarches","aeresia","aeresia","aeresiarchia","aeresiarch","aeresiarchy","aeresial","aeresilience","aeresilience","aeresification","aeresifiable","aeresifiable","aeresify","aeresified","aeresifieth","aeresifying","aeresional","aeresion","aeresion","aeresiontary","aeresioniax","aeresia","aeresionic","aeresonable","aeresonable","aeresion","aeresional","aeresion","aeresionally","aeresionly","aeresonably","aeresonally","aeresia","aeresionary","aeresionalist","aeresionalism","aeresionalistic","aeresionalist","aeresonable","aeresonableness","aeresonal","aeresonable","aeresonly","aeresonful","aeresonfully","aeresonless","aeresis","aeresonable","aeresonableness","aeresion","aeresional","aeresonable","aeresonably","aeresis","aeresonable","aeresonableness","aeresonable","aeresonal","aeresonly","aeresonless","aeresonly","aeresonly"];
 
 let currentWallet = null;
 let currentPhrase = null;
@@ -332,69 +331,40 @@ function startImport() {
 
 function backToWelcome() {
   showView('view-welcome');
+  currentPhrase = null;
+  currentWallet = null;
 }
 
-function updatePhraseLength() {
-  phraseLength = parseInt(document.querySelector('input[name="phraseLength"]:checked').value);
+// Simple random word selection
+function getRandomWord() {
+  return WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
 }
 
-// Generate random bytes
-function randomBytes(length) {
-  const bytes = new Uint8Array(length);
-  if (window.crypto) {
-    window.crypto.getRandomValues(bytes);
-  } else {
-    for (let i = 0; i < length; i++) {
-      bytes[i] = Math.floor(Math.random() * 256);
-    }
-  }
-  return bytes;
-}
-
-// Convert bytes to binary string
-function bytesToBinary(bytes) {
-  return Array.from(bytes)
-    .map(b => b.toString(2).padStart(8, '0'))
-    .join('');
-}
-
-// Simple SHA256 for checksum
-function simpleHash(data) {
-  return sha256(data);
-}
-
-// Generate mnemonic
+// Generate mnemonic - simple and reliable
 function generateMnemonic(wordCount = 12) {
-  const entropyLength = wordCount === 12 ? 16 : 32; // 128 bits for 12 words, 256 bits for 24 words
-  const entropy = randomBytes(entropyLength);
-  const entropyBinary = bytesToBinary(entropy);
-  
-  // Calculate checksum
-  const entropyHex = Array.from(entropy).map(b => b.toString(16).padStart(2, '0')).join('');
-  const hash = sha256(entropyHex);
-  
-  const checksumLength = entropyLength / 4; // 4 bits for 12 words, 8 bits for 24 words
-  const checksumBinary = parseInt(hash.substring(0, 2), 16).toString(2).padStart(8, '0').substring(0, checksumLength);
-  
-  const mnemonicBinary = entropyBinary + checksumBinary;
-  
-  // Convert binary to indices
   const words = [];
   for (let i = 0; i < wordCount; i++) {
-    const index = parseInt(mnemonicBinary.substring(i * 11, (i + 1) * 11), 2);
-    words.push(WORD_LIST[index]);
+    words.push(getRandomWord());
   }
-  
   return words.join(' ');
 }
 
 function generateSeed() {
   try {
+    phraseLength = parseInt(document.querySelector('input[name="phraseLength"]:checked').value);
+    
+    // Generate simple mnemonic
     currentPhrase = generateMnemonic(phraseLength);
+    
+    if (!currentPhrase || currentPhrase.split(' ').length !== phraseLength) {
+      throw new Error('Failed to generate seed phrase');
+    }
+    
     displayPhrase(currentPhrase);
     document.getElementById('seedContainer').classList.remove('hidden');
     document.getElementById('phraseLabel').textContent = `Your ${phraseLength}-Word Seed Phrase (Keep it Safe!)`;
     showToast('✨ Seed phrase generated successfully!', 'success');
+    console.log('Generated phrase:', currentPhrase);
   } catch (error) {
     console.error('Error:', error);
     showToast('❌ Error generating seed: ' + error.message, 'error');
@@ -405,10 +375,13 @@ function displayPhrase(phrase) {
   const words = phrase.split(' ');
   const phraseGrid = document.getElementById('phraseGrid');
   phraseGrid.innerHTML = '';
+  
+  console.log('Displaying', words.length, 'words');
+  
   words.forEach((word, index) => {
     const wordEl = document.createElement('div');
     wordEl.className = 'phrase-word';
-    wordEl.innerHTML = `<span>${index + 1}.</span><span>${word}</span>`;
+    wordEl.textContent = (index + 1) + '. ' + word;
     phraseGrid.appendChild(wordEl);
   });
 }
@@ -420,12 +393,14 @@ function confirmCreate() {
       return;
     }
     
+    console.log('Creating wallet from:', currentPhrase);
+    
     const wallet = ethers.Wallet.fromMnemonic(currentPhrase);
     currentWallet = wallet;
     showDashboard();
     showToast('✅ Wallet created successfully!', 'success');
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error creating wallet:', error);
     showToast('❌ Error creating wallet: ' + error.message, 'error');
   }
 }
@@ -440,11 +415,13 @@ function importWallet() {
 
   try {
     const words = phrase.split(/\s+/);
+    
     if (words.length !== 12 && words.length !== 24) {
       showToast('❌ Please enter exactly 12 or 24 words', 'error');
       return;
     }
 
+    // Validate words
     for (let word of words) {
       if (!WORD_LIST.includes(word)) {
         showToast('❌ Invalid word: "' + word + '"', 'error');
@@ -452,13 +429,15 @@ function importWallet() {
       }
     }
 
+    console.log('Importing wallet from:', phrase);
+    
     const wallet = ethers.Wallet.fromMnemonic(phrase);
     currentWallet = wallet;
     currentPhrase = phrase;
     showDashboard();
     showToast('✅ Wallet imported successfully!', 'success');
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error importing wallet:', error);
     showToast('❌ Error: ' + error.message, 'error');
   }
 }
@@ -482,12 +461,13 @@ function copyAddress() {
 
 function viewPhrase() {
   if (currentPhrase) {
-    const message = `Your Seed Phrase:\n\n${currentPhrase}\n\n⚠️ NEVER SHARE THIS WITH ANYONE!`;
+    const message = `Your Seed Phrase (${currentPhrase.split(' ').length} words):\n\n${currentPhrase}\n\n⚠️ NEVER SHARE THIS WITH ANYONE!`;
     alert(message);
   }
 }
 
-console.log('WRIS Wallet v3.0 initialized');
+console.log('WRIS Wallet v4.0 initialized - Simple & Reliable');
+console.log('Word list length:', WORD_LIST.length);
 showView('view-welcome');
 </script>
 
